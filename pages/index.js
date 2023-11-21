@@ -1,5 +1,3 @@
-import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 
 function Home() {
@@ -8,18 +6,16 @@ function Home() {
   return (
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
+      id="intro"
       style={{
         height: '90vh',
         padding: '30px',
-        maxWidth: '400px',
+        maxWidth: '500px',
         margin: '0 auto',
       }}
     >
       <h1>Hello {user.displayName}! </h1>
-      <p>Click the button below to logout!</p>
-      <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}>
-        Sign Out
-      </Button>
+      <p>Welcome to Migraine Manager. This app will allow you to create logs of your migraines to track your pain level & daily habits. Migraine Manager is here to help you understand the causes of your migraines and keep track of your health.</p>
     </div>
   );
 }
