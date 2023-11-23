@@ -1,7 +1,7 @@
 {
   "-Nj9VEtPbMTzZwS2uJfJ": {
     "logid": "2",
-    "date": "6/16/2024",
+    "dateTime": "2023-06-30T08:15",
     "firebaseKey": "-Nj9VEtPbMTzZwS2uJfJ",
     "painLevel": "mild",
     "sleep": "8 hours",
@@ -12,7 +12,7 @@
   },
   "-Nj9VEtROd4XpowWOqV_": {
     "logid": "2",
-    "date": "1/30/2023",
+    "dateTime": "2023-07-04T02:30",
     "firebaseKey": "-Nj9VEtROd4XpowWOqV_",
     "painLevel": "none",
     "sleep": "6 hours",
@@ -23,7 +23,7 @@
   },
   "-Nj9VEtU7YjLXlvyYgD5": {
     "logid": "1",
-    "date": "4/7/2023",
+    "dateTime": "2023-08-13T07:00",
     "firebaseKey": "-Nj9VEtU7YjLXlvyYgD5",
     "painLevel": "none",
     "sleep": "5 hours",
@@ -34,7 +34,7 @@
   },
   "-Nj9VEtWrfNyBVVTFDko": {
     "logid": "1",
-    "date": "7/21/2024",
+    "dateTime": "2023-09-14T12:10",
     "firebaseKey": "-Nj9VEtWrfNyBVVTFDko",
     "painLevel": "severe",
     "sleep": "8 hours",
@@ -45,7 +45,7 @@
   },
   "-Nj9VEtXvClb4qNZuvgj": {
     "logid": "1",
-    "date": "12/23/2023",
+    "dateTime": "2023-11-07T04:32",
     "firebaseKey": "-Nj9VEtXvClb4qNZuvgj",
     "painLevel": "medium",
     "sleep": "4 hours",

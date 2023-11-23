@@ -24,3 +24,41 @@ body {
 #nav {
   background-color: #CECEF6;
 }
+
+#log-history {
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+}
+
+#form {
+  width: 900px;
+  padding-left: 410px;
+}
+
+#logcards {
+  display: inline-block;
+}
+
+#create {
+  background-color: #F5EFFB;
+  border-radius: 12px;
+  border-color: #f1e3e9;
+  color: black;
+  font-size: 15px;
+  font-family: arial;
+  width: 30%;
+  justify-self: center;
+  margin-left: 180px;
+}
+
+#view {
+  background-color: #F5EFFB;
+  border-radius: 12px;
+  border-color: #f1e3e9;
+  color: black;
+  font-size: 15px;
+  font-family: arial;
+  width: 30%;
+  margin-left: 180px;
+}
