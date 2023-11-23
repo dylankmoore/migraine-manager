@@ -97,6 +97,7 @@ function LogForm({ obj }) {
         />Severe
         </label>
         <br /><br />
+
         {/* SLEEP INPUT  */}
         Hours Slept:
         <FloatingLabel controlId="floatingInput1" label="" className="mb-3">
@@ -159,7 +160,7 @@ function LogForm({ obj }) {
         <br />
         <Button id="logform" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Log</Button>
       </Form>
-      <br />
+      <br /><br />
     </div>
   );
 }

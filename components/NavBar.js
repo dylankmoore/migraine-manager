@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -11,22 +11,32 @@ export default function NavBar() {
     <Navbar id="nav" collapseOnSelect expand="lg">
       <Container>
         <Link passHref href="/">
-          <Navbar.Brand>Migraine Manager</Navbar.Brand>
+          <Navbar.Brand>
+            <img src="/migraine2.png" alt="logo" className="nav-logo" width="150" height="50" />
+          </Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
             <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link>
+                &nbsp;&nbsp;home &nbsp;&nbsp;• &nbsp;
+              </Nav.Link>
             </Link>
             <Link passHref href="/logs/new">
-              <Nav.Link>Create A Log</Nav.Link>
+              <Nav.Link>
+                create a log  &nbsp; &nbsp;• &nbsp;
+              </Nav.Link>
             </Link>
             <Link passHref href="/LogHistory">
-              <Nav.Link>View Log History</Nav.Link>
+              <Nav.Link>view log history  &nbsp; &nbsp; &nbsp;</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
+            <Button
+              id="signout"
+              onClick={signOut}
+            >SIGN OUT
+            </Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
