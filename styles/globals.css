@@ -4,8 +4,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 a {
@@ -18,11 +17,12 @@ a {
 }
 
 body {
-  background-color: #E6E0F8;
+  background-color: #F2EFFB;
 }
 
 #nav {
   background-color: #CECEF6;
+  white-space: nowrap;
 }
 
 #log-history {
@@ -41,24 +41,67 @@ body {
 }
 
 #create {
-  background-color: #F5EFFB;
+  background-color: #8181F7;
   border-radius: 12px;
-  border-color: #f1e3e9;
-  color: black;
+  border-color: #8181F7;
+  color: white;
   font-size: 15px;
-  font-family: arial;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   width: 30%;
   justify-self: center;
   margin-left: 180px;
 }
 
 #view {
-  background-color: #F5EFFB;
+  background-color: #8181F7;
   border-radius: 12px;
-  border-color: #f1e3e9;
-  color: black;
-  font-size: 15px;
-  font-family: arial;
+  border-color: #8181F7;
+  color: white;
+  font-size: 14px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   width: 30%;
   margin-left: 180px;
+}
+#msg {
+  margin-right: 490px;
+  font-family: monospace;
+}
+
+#signin {
+  width: 20%;
+  display: flex;
+  margin-left: 190px;
+  background-color: #8181F7;
+  border-color: #8181F7;
+  border-radius: 20px;
+}
+
+#enter {
+  justify-self: center;
+  margin-left: 130px;
+}
+
+#signout {
+  background-color: #E6E0F8;
+  border-color: #E6E0F8;
+  color: black;
+}
+
+#logform {
+  background-color: #8181F7;
+  border-color: #8181F7;
+}
+
+#card.title {
+  font-family: arial;
+}
+
+#edit{
+  border-color: #8181F7;
+  background-color: #8181F7;
+}
+
+#logdel{
+  border-color: #8181F7;
+  background-color: #8181F7;
 }

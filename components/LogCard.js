@@ -21,7 +21,7 @@ export default function LogCard({ logObj, onUpdate }) {
     <div id="logcards">
       <Card style={{ width: '18rem', margin: '10px' }}>
         <Card.Body>
-          <Card.Title>{date} {time}</Card.Title>
+          <Card.Title><b>{date} {time}</b></Card.Title>
           <p className="card-text"><b>pain level</b>: {logObj.painLevel}</p>
           <p className="card-text"><b>sleep</b>: {logObj.sleep}</p>
           <p className="card-text"><b>food</b>: {logObj.food}</p>
