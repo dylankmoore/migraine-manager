@@ -18,7 +18,7 @@ function Home() {
       <div id="img">
         <Card style={{ margin: '5px' }}>
           <Card.Body>
-            <img src="journaling.png" alt="journaling" className="nav-logo" height="250" width="500" />
+            <img src="journal.jpg" alt="journaling" className="nav-logo" height="250" width="500" />
           </Card.Body>
         </Card>
       </div><br />
