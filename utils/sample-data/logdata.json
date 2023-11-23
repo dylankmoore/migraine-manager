@@ -1,0 +1,57 @@
+{
+  "-Nj9VEtPbMTzZwS2uJfJ": {
+    "logid": "2",
+    "dateTime": "2023-06-30T08:15",
+    "firebaseKey": "-Nj9VEtPbMTzZwS2uJfJ",
+    "painLevel": "mild",
+    "sleep": "8 hours",
+    "food": "orange juice, coffee, bagel, turkey sandwich, spaghetti, water",
+    "exercise": "one hour run",
+    "notes": "had a migraine upon waking up that gradually got better",
+    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
+  },
+  "-Nj9VEtROd4XpowWOqV_": {
+    "logid": "2",
+    "dateTime": "2023-07-04T02:30",
+    "firebaseKey": "-Nj9VEtROd4XpowWOqV_",
+    "painLevel": "none",
+    "sleep": "6 hours",
+    "food": "coffee, orange juice, water, banana, raspberries, pancakes, eggs, turkey sandwich, pasta, garlic bread, seltzer, espresso",
+    "exercise": "1 hour dance class",
+    "notes": "great day, had no pain",
+    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
+  },
+  "-Nj9VEtU7YjLXlvyYgD5": {
+    "logid": "1",
+    "dateTime": "2023-08-13T07:00",
+    "firebaseKey": "-Nj9VEtU7YjLXlvyYgD5",
+    "painLevel": "none",
+    "sleep": "5 hours",
+    "food": "coffee, orange juice, oatmeal, banana, toast, grilled cheese, tomato soup, water, seltzer, grapes, shrimp stir fry",
+    "exercise": "2 hour walk/jog",
+    "notes": "felt great today, didn't have any pain",
+    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
+  },
+  "-Nj9VEtWrfNyBVVTFDko": {
+    "logid": "1",
+    "dateTime": "2023-09-14T12:10",
+    "firebaseKey": "-Nj9VEtWrfNyBVVTFDko",
+    "painLevel": "severe",
+    "sleep": "8 hours",
+    "food": "matcha green tea, orange juice, zucchini muffin, banana, energy bar, turkey apple brie, salad, falafel gyro, seltzer water",
+    "exercise": "none",
+    "notes": "tough day, painful migraine all day",
+    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
+  },
+  "-Nj9VEtXvClb4qNZuvgj": {
+    "logid": "1",
+    "dateTime": "2023-11-07T04:32",
+    "firebaseKey": "-Nj9VEtXvClb4qNZuvgj",
+    "painLevel": "medium",
+    "sleep": "4 hours",
+    "food": "coffee, orange juice, eggs, toast, orange, water, pb & j, chips and salsa, quesadilla, burrito, seltzer",
+    "exercise": "one hour walk",
+    "notes": "had a dull but manageable migraine throughout the day",
+    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
+  }
+}
