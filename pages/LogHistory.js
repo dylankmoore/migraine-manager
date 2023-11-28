@@ -6,7 +6,8 @@ import { getLogs } from '../api/LogData';
 
 // FUNCTION TO SHOW ALL LOGS
 export default function Logs() {
-  const [members, setLogs] = useState([]);
+// logs is the state variable, and setLogs is the function used to update this state variable.
+  const [logs, setLogs] = useState([]);
   const { user } = useAuth();
 
   const getAllLogs = () => {
@@ -17,7 +18,7 @@ export default function Logs() {
     getAllLogs();
   }, []);
 
-  // log history rendering
+  // LOG HISTORY RENDERING
   return (
     <div
       id="log-history"
@@ -31,7 +32,7 @@ export default function Logs() {
       <div>
         <h1>Log History:</h1><hr /><br />
         <div className="logs">
-          {members.map((log) => (
+          {logs.map((log) => (
             <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
           ))}
         </div>

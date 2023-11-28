@@ -11,7 +11,9 @@ const initialState = {
   dateTime: '',
   painLevel: '',
   sleep: '',
-  food: '',
+  breakfast: '',
+  lunch: '',
+  dinner: '',
   exercise: '',
   notes: '',
 };
@@ -27,7 +29,7 @@ function LogForm({ obj }) {
     getLogs(user.uid).then(setLog);
 
     if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user]);
+  }, [obj, user, setLog]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -111,14 +113,40 @@ function LogForm({ obj }) {
           />
         </FloatingLabel>
 
-        {/* FOOD INPUT  */}
-        Food consumed:
+        {/* BREAKFAST INPUT  */}
+        Breakfast:
         <FloatingLabel controlId="floatingInput2" label="" className="mb-3">
           <Form.Control
             type="text"
-            placeholder="Enter food consumed"
-            name="food"
-            value={formInput.food}
+            placeholder="Enter breakfast"
+            name="breakfast"
+            value={formInput.breakfast}
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
+
+        {/* LUNCH INPUT  */}
+        Lunch:
+        <FloatingLabel controlId="floatingInput2" label="" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter lunch"
+            name="lunch"
+            value={formInput.lunch}
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
+
+        {/* DINNER INPUT  */}
+        Dinner:
+        <FloatingLabel controlId="floatingInput2" label="" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter dinner"
+            name="dinner"
+            value={formInput.dinner}
             onChange={handleChange}
             required
           />
@@ -169,7 +197,9 @@ LogForm.propTypes = {
   obj: PropTypes.shape({
     painLevel: PropTypes.string,
     sleep: PropTypes.string,
-    food: PropTypes.string,
+    breakfast: PropTypes.string,
+    lunch: PropTypes.string,
+    dinner: PropTypes.string,
     exercise: PropTypes.string,
     firebaseKey: PropTypes.string,
     notes: PropTypes.string,
