@@ -16,15 +16,17 @@ export default function LogCard({ logObj, onUpdate }) {
   const date = appointmentDate.toLocaleDateString();
   const time = appointmentDate.toLocaleTimeString();
 
-  // LOGCARDS
+  // LOG CARDS
   return (
     <div id="logcards">
-      <Card style={{ width: '18rem', margin: '10px' }}>
+      <Card style={{ width: '20rem', margin: '10px', height: '32rem' }}>
         <Card.Body>
-          <Card.Title><b>{date} {time}</b></Card.Title>
+          <Card.Title><b>{date} {time}</b></Card.Title><br />
           <p className="card-text"><b>pain level</b>: {logObj.painLevel}</p>
           <p className="card-text"><b>sleep</b>: {logObj.sleep}</p>
-          <p className="card-text"><b>food</b>: {logObj.food}</p>
+          <p className="card-text"><b>breakfast</b>: {logObj.breakfast}</p>
+          <p className="card-text"><b>lunch</b>: {logObj.lunch}</p>
+          <p className="card-text"><b>dinner</b>: {logObj.dinner}</p>
           <p className="card-text"><b>exercise</b>: {logObj.exercise}</p>
           <p className="card-text"><b>notes</b>: {logObj.notes}</p>
           <div className="text-center">
@@ -48,7 +50,9 @@ LogCard.propTypes = {
     logId: PropTypes.string,
     painLevel: PropTypes.string,
     sleep: PropTypes.string,
-    food: PropTypes.string,
+    breakfast: PropTypes.string,
+    lunch: PropTypes.string,
+    dinner: PropTypes.string,
     exercise: PropTypes.string,
     notes: PropTypes.string,
     uid: PropTypes.string,
