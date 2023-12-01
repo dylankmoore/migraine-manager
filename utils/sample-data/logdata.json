@@ -1,22 +1,19 @@
 {
   "-Nj9VEtPbMTzZwS2uJfJ": {
-    "logid": "2",
     "dateTime": "2023-06-30T08:15",
     "firebaseKey": "-Nj9VEtPbMTzZwS2uJfJ",
-    "painLevel": "mild",
     "sleep": "8 hours",
     "breakfast": "orange juice, coffee, bagel, banana",
     "lunch": "turkey sandwich, salad, seltzer",
     "dinner": "veggie stir fry, white rice, water",
     "exercise": "one hour run",
     "notes": "had a migraine upon waking up that gradually got better",
-    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
+    "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2",
+    "painid": "-NkNaWzxGNbZ4hhQhiAR"
   },
   "-Nj9VEtROd4XpowWOqV_": {
-    "logid": "2",
     "dateTime": "2023-07-04T02:30",
     "firebaseKey": "-Nj9VEtROd4XpowWOqV_",
-    "painLevel": "none",
     "sleep": "6 hours",
     "breakfast": "coffee, orange juice, water, banana, raspberries, pancakes",
     "lunch":"turkey sandwich, salad, seltzer",
@@ -26,10 +23,8 @@
     "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
   },
   "-Nj9VEtU7YjLXlvyYgD5": {
-    "logid": "1",
     "dateTime": "2023-08-13T07:00",
     "firebaseKey": "-Nj9VEtU7YjLXlvyYgD5",
-    "painLevel": "none",
     "sleep": "5 hours",
     "breakfast": "coffee, orange juice, water, banana, raspberries, pancakes",
     "lunch":"pb&j, pretzels, seltzer, salad",
@@ -39,10 +34,8 @@
     "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
   },
   "-Nj9VEtWrfNyBVVTFDko": {
-    "logid": "1",
     "dateTime": "2023-09-14T12:10",
     "firebaseKey": "-Nj9VEtWrfNyBVVTFDko",
-    "painLevel": "severe",
     "sleep": "8 hours",
     "breakfast": "matcha green tea, orange juice, zucchini muffin, banana, energy bar",
     "lunch":"seltzer, turkey apple brie, salad",
@@ -52,10 +45,8 @@
     "uid": "DuVoSAAIY5ZPtsp2eOZIeiuhiiB2"
   },
   "-Nj9VEtXvClb4qNZuvgj": {
-    "logid": "1",
     "dateTime": "2023-11-07T04:32",
     "firebaseKey": "-Nj9VEtXvClb4qNZuvgj",
-    "painLevel": "medium",
     "sleep": "4 hours",
     "breakfast": "coffee, orange juice, water, yogurt, raisin brain cereal,",
     "lunch":"pasta salad, orange, seltzer, caprese sandwich",

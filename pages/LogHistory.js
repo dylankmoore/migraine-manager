@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import LogCard from '../components/LogCard';
 import { getLogs } from '../api/LogData';
+import viewPainDetails from '../api/mergedData';
 
 // FUNCTION TO SHOW ALL LOGS
 export default function Logs() {
@@ -11,7 +12,10 @@ export default function Logs() {
   const { user } = useAuth();
 
   const getAllLogs = () => {
-    getLogs(user.uid).then(setLogs);
+    getLogs(user.uid).then((logList) => {
+      Promise.all(logList.map((log) => viewPainDetails(log.firebaseKey)))
+        .then(setLogs);
+    });
   };
 
   useEffect(() => {
@@ -33,7 +37,7 @@ export default function Logs() {
         <h1>Log History:</h1><hr /><br />
         <div className="logs">
           {logs.map((log) => (
-            <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
+            <LogCard key={log.firebaseKey} logObj={log} painName={log.painObject?.level} onUpdate={getAllLogs} />
           ))}
         </div>
       </div>

@@ -6,10 +6,11 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { getLogs, updateLog, createLog } from '../../api/LogData';
+import { getPainLevel } from '../../api/painData';
 
 const initialState = {
   dateTime: '',
-  painLevel: '',
+  painid: '',
   sleep: '',
   breakfast: '',
   lunch: '',
@@ -24,12 +25,19 @@ function LogForm({ obj }) {
   const [setLog] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
+  const [pains, setPain] = useState([]);
 
   useEffect(() => {
     getLogs(user.uid).then(setLog);
 
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user, setLog]);
+
+  useEffect(() => {
+    getPainLevel().then(setPain);
+
+    if (obj.firebaseKey) setFormInput(obj);
+  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,45 +68,6 @@ function LogForm({ obj }) {
     <div id="form">
       <Form onSubmit={handleSubmit}>
         <h1 className="text-black mt-5">Create A Log:</h1><hr />
-        {/* PAIN LEVEL INPUT */}
-        <b>Level of pain:</b><br />
-        <label><input
-          type="radio"
-          name="painLevel"
-          value="None"
-          checked={formInput.painLevel === 'None'}
-          onChange={handleChange}
-          required
-        />None
-        </label><br />
-        <label><input
-          type="radio"
-          name="painLevel"
-          value="Mild"
-          checked={formInput.painLevel === 'Mild'}
-          onChange={handleChange}
-          required
-        />Mild
-        </label><br />
-        <label><input
-          type="radio"
-          name="painLevel"
-          value="Medium"
-          checked={formInput.painLevel === 'Medium'}
-          onChange={handleChange}
-          required
-        />Medium
-        </label><br />
-        <label><input
-          type="radio"
-          name="painLevel"
-          value="Severe"
-          checked={formInput.painLevel === 'Severe'}
-          onChange={handleChange}
-          required
-        />Severe
-        </label>
-        <br /><br />
 
         {/* SLEEP INPUT  */}
         Hours Slept:
@@ -178,6 +147,29 @@ function LogForm({ obj }) {
           />
         </FloatingLabel>
 
+        <FloatingLabel controlId="floatingSelect" label="pain">
+          <Form.Select
+            aria-label="pain"
+            name="painid"
+            onChange={handleChange}
+            className="mb-3"
+            value={formInput.painid}
+            required
+          >
+            <option value="">Select A Pain Level</option>
+            {
+            pains.map((pain) => (
+              <option
+                key={pain.firebaseKey}
+                value={pain.firebaseKey}
+              >
+                {pain.level}
+              </option>
+            ))
+          }
+          </Form.Select>
+        </FloatingLabel>
+
         <Form.Label>Choose Date:</Form.Label>
         <Form.Control
           type="dateTime-local"
@@ -195,7 +187,6 @@ function LogForm({ obj }) {
 
 LogForm.propTypes = {
   obj: PropTypes.shape({
-    painLevel: PropTypes.string,
     sleep: PropTypes.string,
     breakfast: PropTypes.string,
     lunch: PropTypes.string,
