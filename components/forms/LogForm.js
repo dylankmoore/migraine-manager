@@ -8,6 +8,7 @@ import { useAuth } from '../../utils/context/authContext';
 import { getLogs, updateLog, createLog } from '../../api/LogData';
 import { getPainLevel } from '../../api/painData';
 
+// initalizing the state of the form
 const initialState = {
   dateTime: '',
   painid: '',
@@ -147,9 +148,10 @@ function LogForm({ obj }) {
           />
         </FloatingLabel>
 
-        <FloatingLabel controlId="floatingSelect" label="pain">
+        {/* PAIN INPUT */}
+        Pain Level:
+        <FloatingLabel controlId="floatingSelect">
           <Form.Select
-            aria-label="pain"
             name="painid"
             onChange={handleChange}
             className="mb-3"
