@@ -9,6 +9,7 @@ import viewPainDetails from '../api/mergedData';
 export default function Logs() {
 // logs is the state variable, and setLogs is the function used to update this state variable.
   const [logs, setLogs] = useState([]);
+  console.warn('logs', logs);
   const { user } = useAuth();
 
   const getAllLogs = () => {
@@ -37,7 +38,7 @@ export default function Logs() {
         <h1>Log History:</h1><hr /><br />
         <div className="logs">
           {logs.map((log) => (
-            <LogCard key={log.firebaseKey} logObj={log} painName={log.painObject?.level} onUpdate={getAllLogs} />
+            <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
           ))}
         </div>
       </div>

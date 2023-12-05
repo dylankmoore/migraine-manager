@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { getLogs, updateLog, createLog } from '../../api/LogData';
-import { getPainLevel } from '../../api/painData';
 
 // initalizing the state of the form
 const initialState = {
@@ -26,19 +25,12 @@ function LogForm({ obj }) {
   const [setLog] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
-  const [pains, setPain] = useState([]);
 
   useEffect(() => {
     getLogs(user.uid).then(setLog);
 
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user, setLog]);
-
-  useEffect(() => {
-    getPainLevel().then(setPain);
-
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,6 +67,7 @@ function LogForm({ obj }) {
         <FloatingLabel controlId="floatingInput1" label="" className="mb-3">
           <Form.Control
             type="text"
+            id="sleepInput"
             placeholder="Enter hours slept"
             name="sleep"
             value={formInput.sleep}
@@ -88,6 +81,7 @@ function LogForm({ obj }) {
         <FloatingLabel controlId="floatingInput2" label="" className="mb-3">
           <Form.Control
             type="text"
+            id="breakfastInput"
             placeholder="Enter breakfast"
             name="breakfast"
             value={formInput.breakfast}
@@ -101,6 +95,7 @@ function LogForm({ obj }) {
         <FloatingLabel controlId="floatingInput2" label="" className="mb-3">
           <Form.Control
             type="text"
+            id="lunchInput"
             placeholder="Enter lunch"
             name="lunch"
             value={formInput.lunch}
@@ -114,6 +109,7 @@ function LogForm({ obj }) {
         <FloatingLabel controlId="floatingInput2" label="" className="mb-3">
           <Form.Control
             type="text"
+            id="dinnerInput"
             placeholder="Enter dinner"
             name="dinner"
             value={formInput.dinner}
@@ -127,6 +123,7 @@ function LogForm({ obj }) {
         <FloatingLabel controlId="floatingInput3" label="" className="mb-3">
           <Form.Control
             type="text"
+            id="exerciseInput"
             placeholder=""
             name="exercise"
             value={formInput.exercise}
@@ -140,6 +137,7 @@ function LogForm({ obj }) {
         <FloatingLabel controlId="floatingInput3" label="" className="mb-3">
           <Form.Control
             type="text"
+            id="notesInput"
             placeholder=""
             name="notes"
             value={formInput.notes}
@@ -148,41 +146,19 @@ function LogForm({ obj }) {
           />
         </FloatingLabel>
 
-        {/* PAIN INPUT */}
-        Pain Level:
-        <FloatingLabel controlId="floatingSelect">
-          <Form.Select
-            name="painid"
-            onChange={handleChange}
-            className="mb-3"
-            value={formInput.painid}
-            required
-          >
-            <option value="">Select A Pain Level</option>
-            {
-            pains.map((pain) => (
-              <option
-                key={pain.firebaseKey}
-                value={pain.firebaseKey}
-              >
-                {pain.level}
-              </option>
-            ))
-          }
-          </Form.Select>
-        </FloatingLabel>
-
-        <Form.Label>Choose Date:</Form.Label>
-        <Form.Control
+        <Form.Label>Choose Date:</Form.Label><Form.Control
           type="dateTime-local"
           name="dateTime"
+          id="dateInput"
           value={formInput.dateTime}
           onChange={handleChange}
         />
         <br />
-        <Button id="logform" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Log</Button>
+        <Button id="logform" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Log
+        </Button>
       </Form>
-      <br /><br />
+      <br />
+      <br />
     </div>
   );
 }
