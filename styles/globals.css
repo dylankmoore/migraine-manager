@@ -114,3 +114,18 @@ body {
 #img{
   display: inline-block;
 }
+
+#choosepain{
+  border-color: #58ACFA;
+  background-color: #58ACFA
+}
+
+#closepain{
+  border-color: #A9BCF5;
+  background-color: #A9BCF5;
+}
+
+#savepain{
+  border-color: #A9BCF5;
+  background-color: #A9BCF5;
+}

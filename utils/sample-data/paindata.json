@@ -1,18 +1,22 @@
 {
   "-NkNaWzvjNXar2k2_n06": {
     "level": "none",
-    "painid": "-NkNaWzvjNXar2k2_n06"
+    "firebaseKey": "-NkNaWzvjNXar2k2_n06",
+    "logIds": {}
   },
   "-NkNaWzwll7CMIoaKBIZ": {
     "level": "mild",
-    "painid": "-NkNaWzwll7CMIoaKBIZ"
+    "firebaseKey": "-NkNaWzwll7CMIoaKBIZ",
+    "logIds": {}
   },
   "-NkNaWzxGNbZ4hhQhiAR": {
     "level": "medium",
-    "painid": "-NkNaWzxGNbZ4hhQhiAR"
+    "firebaseKey": "-NkNaWzxGNbZ4hhQhiAR",
+    "logIds": {}
   },
   "-NkNaWzy5m4Bixqe-FAy": {
     "level": "severe",
-    "painid": "-NkNaWzy5m4Bixqe-FAy"
+    "firebaseKey": "-NkNaWzy5m4Bixqe-FAy",
+    "logIds": {}
   }
 }
