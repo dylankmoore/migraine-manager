@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { React, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -22,14 +23,15 @@ export default function LogCard({ logObj, onUpdate }) {
     setShowPainModal(false);
   };
 
-  // HANDLING SELECTION OF PAIN PEVELS
+  // HANDLING SELECTION OF PAIN LEVELS
   const handlePainLevelSelect = () => {
     if (selectedPainId) {
       const updatedLogObj = { ...logObj, painId: selectedPainId, painObject };
-      // UPDATE LOG WITH PAIN ID
+      // UPDATE LOG WITH PAIN LEVEL
       updatePainLevel(updatedLogObj)
         .then(() => {
           onUpdate(updatedLogObj);
+          // HIDE MODAL UPON SELECTION
           setShowPainModal(false);
         });
     }
@@ -50,9 +52,6 @@ export default function LogCard({ logObj, onUpdate }) {
       setPainObject(selectedPain);
     }
   }, [painLevels, selectedPainId]);
-
-  // keep the selected pain level on display
-  const selectedPainLevel = painLevels.find((painLevel) => painLevel.level === selectedPainId);
 
   // generates the array of pain level options and maps through them
   const painLevelOptions = painLevels.map((painLevel) => (
@@ -75,7 +74,10 @@ export default function LogCard({ logObj, onUpdate }) {
   // LOG CARDS
   return (
     <div id="logcards">
-      <Card style={{ width: '20rem', margin: '10px', height: '5' }}>
+      <Card style={{
+        width: '20rem', margin: '10px', height: '5', borderRadius: '70px', borderColor: '#F2EFFB',
+      }}
+      >
         <Card.Body>
           <Card.Title><b>{date} {time}</b></Card.Title><br />
           <p className="card-text"><b>sleep</b>: {logObj.sleep}</p>
@@ -84,7 +86,7 @@ export default function LogCard({ logObj, onUpdate }) {
           <p className="card-text"><b>dinner</b>: {logObj.dinner}</p>
           <p className="card-text"><b>exercise</b>: {logObj.exercise}</p>
           <p className="card-text"><b>notes</b>: {logObj.notes}</p>
-
+          <br />
           <Button id="choosepain" onClick={handleShowModal}>Choose Pain Level</Button>
 
           <Modal show={showPainModal} onHide={handleCloseModal}>
@@ -99,7 +101,6 @@ export default function LogCard({ logObj, onUpdate }) {
                 <option value="">Select Pain Level:</option>
                 {painLevelOptions}
               </select>
-              <p>{selectedPainLevel}</p>
             </Modal.Body>
             <Modal.Footer>
               <Button id="savepain" onClick={handlePainLevelSelect}>Save</Button>
@@ -110,10 +111,9 @@ export default function LogCard({ logObj, onUpdate }) {
           <div className="text-center">
             {/* DYNAMIC LINK TO EDIT THE LOG DETAILS  */}
             <Link href={`/logs/edit/${logObj.firebaseKey}`} passHref>
-              <Button id="edit">EDIT</Button>
+              <Button id="edit"><img src="update.png" alt="edit" title="edit" /></Button>
             </Link>
-            <Button id="logdel" className="m-2" onClick={deleteThisLog}>
-              DELETE
+            <Button id="logdel" className="m-2" onClick={deleteThisLog}><img src="del.png" alt="logo" title="delete" />
             </Button>
           </div>
         </Card.Body>

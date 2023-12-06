@@ -8,7 +8,7 @@ const viewPainDetails = (logFirebaseKey) => new Promise((resolve, reject) => {
     .then((logObj) => {
       // if a log id has an associated pain id, fetch that data
       if (logObj.painId) {
-        getPainLevel(logObj.painid)
+        getPainLevel(logObj.painId)
           .then((painObject) => {
             resolve({ painObject, ...logObj });
           }).catch((error) => reject(error));

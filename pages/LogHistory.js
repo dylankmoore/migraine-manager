@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import LogCard from '../components/LogCard';
@@ -9,7 +10,6 @@ import viewPainDetails from '../api/mergedData';
 export default function Logs() {
 // logs is the state variable, and setLogs is the function used to update this state variable.
   const [logs, setLogs] = useState([]);
-  console.warn('logs', logs);
   const { user } = useAuth();
 
   const getAllLogs = () => {
@@ -34,8 +34,8 @@ export default function Logs() {
         alignItems: 'center',
       }}
     >
-      <div>
-        <h1>Log History:</h1><hr /><br />
+      <div id="history">
+        <h1><img src="/loghistory.png" alt="create" width="490" height="50" /></h1><br /><hr /><br />
         <div className="logs">
           {logs.map((log) => (
             <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
