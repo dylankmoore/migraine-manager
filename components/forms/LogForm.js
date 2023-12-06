@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -10,7 +11,6 @@ import { getLogs, updateLog, createLog } from '../../api/LogData';
 // initalizing the state of the form
 const initialState = {
   dateTime: '',
-  painid: '',
   sleep: '',
   breakfast: '',
   lunch: '',
@@ -19,19 +19,21 @@ const initialState = {
   notes: '',
 };
 
-// function to render the create a log form
+// function to render the log form inputs
 function LogForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
   const [setLog] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
+  // fetching log data for current user & update the setLog variable
   useEffect(() => {
     getLogs(user.uid).then(setLog);
 
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user, setLog]);
 
+  // updating the formInput state when a change occurs in the inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInput((prevState) => ({
@@ -40,7 +42,7 @@ function LogForm({ obj }) {
     }));
   };
 
-  // function to re render the log history upon submit
+  // function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
@@ -58,10 +60,11 @@ function LogForm({ obj }) {
 
   // add/edit log form
   return (
-    <div id="form">
+    <div
+      id="form"
+    >
       <Form onSubmit={handleSubmit}>
-        <h1 className="text-black mt-5">Create A Log:</h1><hr />
-
+        <h1 className="text-black mt-5"><img src="/createalog.png" alt="create" width="500" height="45" /></h1><br /><hr /><br />
         {/* SLEEP INPUT  */}
         Hours Slept:
         <FloatingLabel controlId="floatingInput1" label="" className="mb-3">
@@ -158,7 +161,7 @@ function LogForm({ obj }) {
         </Button>
       </Form>
       <br />
-      <br />
+      <br /><br />
     </div>
   );
 }
@@ -175,7 +178,7 @@ LogForm.propTypes = {
     dateTime: PropTypes.string,
   }),
 };
-
+// defining the default values if they aren't provided
 LogForm.defaultProps = {
   obj: initialState,
 };

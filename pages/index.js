@@ -18,7 +18,7 @@ function Home() {
       <br />
 
       <h1>Hello {user.displayName}! </h1><br />
-      <p>Welcome to Migraine Manager, an app designed to empower you on your journey to better health by diligently tracking your migraines and daily routines. By recording your headaches and lifestyle choices, Migraine Manager aims to help you unravel the triggers behind your migraines. Take control of your well-being and discover ways to minimize migraine occurences with Migraine Manager today.
+      <p>Welcome to Migraine Manager, an app designed to empower you on your journey to better health by diligently tracking your migraines and daily routines. By recording your headaches and lifestyle choices, Migraine Manager aims to help you unravel the triggers behind your migraines. Take control of your well-being and minimize migraine occurences with Migraine Manager today!
       </p><br />
 
       Click below to either create a new log or view your log history:<br /><br />
