@@ -40,6 +40,8 @@ export default function Logs() {
           {logs.map((log) => (
             <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
           ))}
+          <br /><br /><br />
+          <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by dylankmoore</footer>
         </div>
       </div>
     </div>

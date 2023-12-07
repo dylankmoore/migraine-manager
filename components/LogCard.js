@@ -75,7 +75,7 @@ export default function LogCard({ logObj, onUpdate }) {
   return (
     <div id="logcards">
       <Card style={{
-        width: '20rem', margin: '10px', height: '5', borderRadius: '70px', borderColor: '#F2EFFB',
+        width: '20rem', margin: '10px', height: '5', borderRadius: '70px', borderColor: '#F2EFFB', backgroundColor: '#E0E6F8',
       }}
       >
         <Card.Body>

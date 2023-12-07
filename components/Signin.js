@@ -20,6 +20,8 @@ function Signin() {
       <Button type="button" id="signin" size="lg" className="copy-btn" onClick={signIn}>
         Sign In
       </Button>
+      <br /><br /><br />
+      <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by dylankmoore</footer>
     </div>
   );
 }

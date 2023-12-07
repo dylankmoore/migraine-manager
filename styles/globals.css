@@ -34,7 +34,7 @@ body {
 }
 
 #form {
-  display: flex; 
+  display: flex;
   justify-content: center;
   padding-bottom: 30px;
 }
@@ -49,8 +49,7 @@ body {
   color: white;
   font-size: 15px;
   width: 30%;
-  justify-self: center;
-  margin-left: 180px;
+  align-self: center;
 }
 
 #view {
@@ -60,7 +59,7 @@ body {
   color: white;
   font-size: 14px;
   width: 30%;
-  margin-left: 180px;
+  align-self: center;
 }
 #msg {
   margin-right: 490px;
@@ -108,10 +107,6 @@ body {
   border-radius: 15px;
 }
 
-#welcome{
-  display: inline-block;
-}
-
 #img{
   display: inline-block;
 }
@@ -134,4 +129,17 @@ body {
 
 #history{
   width: 990px;
+}
+
+#footer{
+  display: flex;
+  flex-direction: column;
+  min-height:8vh;
+}
+
+#welcome{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 14px;
 }
