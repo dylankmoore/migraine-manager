@@ -3,7 +3,6 @@ import { clientCredentials } from '../utils/client';
 const endpoint = clientCredentials.databaseURL;
 
 // GET PAIN LEVELS
-// setting our painId to null allows us to EITHER get all pain levels OR get specific painId
 const getPainLevel = (painId = null) => {
   let url = `${endpoint}/paindata.json`;
   if (painId) {
@@ -24,7 +23,7 @@ const getPainLevel = (painId = null) => {
             // return fetched data
             resolve(data);
           } else {
-            // resolve with array of pain levels if no pain id is proided
+            // resolve with array of pain levels if no pain id is provided
             resolve(Object.values(data));
           }
         } else {
@@ -41,6 +40,7 @@ const getPainLevel = (painId = null) => {
 const updatePainLevel = (payload) => Promise.all([
   // performing two different calls using the promise.all so that we can update both the log & pain data
 
+  // updating the log
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/logdata/${payload.firebaseKey}.json`, {
       method: 'PATCH',
