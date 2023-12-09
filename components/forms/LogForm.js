@@ -6,7 +6,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { getLogs, updateLog, createLog } from '../../api/LogData';
+import { updateLog, createLog } from '../../api/LogData';
 
 // initalizing the state of the form
 const initialState = {
@@ -22,16 +22,13 @@ const initialState = {
 // function to render the log form inputs
 function LogForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [setLog] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   // fetching log data for current user & update the setLog variable
   useEffect(() => {
-    getLogs(user.uid).then(setLog);
-
     if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user, setLog]);
+  }, [obj, user]);
 
   // updating the formInput state when a change occurs in the inputs
   const handleChange = (e) => {
@@ -159,6 +156,9 @@ function LogForm({ obj }) {
         <br />
         <Button id="logform" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Log
         </Button>
+        <br /><br /><br />
+        <footer id="bottom" style={{ fontSize: '12px', textAlign: 'center' }}>© 2023 migraine manager by <a href="https://github.com/dylankmoore">dylankmoore</a></footer>
+
       </Form>
       <br />
       <br /><br />

@@ -10,11 +10,11 @@ const viewPainDetails = (logFirebaseKey) => new Promise((resolve, reject) => {
       if (logObj.painId) {
         getPainLevel(logObj.painId)
           .then((painObject) => {
-            resolve({ painObject, ...logObj });
+            resolve({ ...painObject, logObj });
           }).catch((error) => reject(error));
       } else {
         // if no pain id, set the object to a null value
-        resolve({ ...logObj, painObject: null });
+        resolve({ painObject: null, logObj });
       }
     }).catch((error) => reject(error));
 });

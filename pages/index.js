@@ -16,7 +16,7 @@ function Home() {
       }}
     >
       <Card style={{
-        width: '40rem', margin: '10px', height: '7', borderRadius: '160px', borderColor: '#F2EFFB', backgroundColor: '#E0E0F8', alignItems: 'center', padding: '20px', marginTop: '0px',
+        width: '36rem', margin: '10px', height: '7', borderRadius: '160px', borderColor: '#F2EFFB', backgroundColor: '#E0E0F8', alignItems: 'center', padding: '20px', marginTop: '0px',
       }}
       >
         <Card.Body />
@@ -27,14 +27,14 @@ function Home() {
         </p><br />
 
         Click below to either create a new log or view your log history:<br /><br /><br />
-        <Button variant="danger" id="create" type="button" size="medium" className="copy-btn" href="/logs/new">
+        <Button id="create" href="/logs/new" style={{ textDecoration: 'none' }}>
           Create A Log
         </Button><p />
-        <Button variant="danger" id="view" type="button" size="medium" className="copy-btn" href="/LogHistory"> View Log History
+        <Button id="view" href="/LogHistory" style={{ textDecoration: 'none' }}> View Log History
         </Button>
       </Card>
       <div id="footer" />
-      <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by dylankmoore</footer>
+      <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by <a href="https://github.com/dylankmoore">dylankmoore</a></footer>
     </div>
   );
 }

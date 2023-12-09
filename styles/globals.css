@@ -52,6 +52,11 @@ body {
   align-self: center;
 }
 
+#create:hover{
+  background-color: #A9BCF5;
+  border-color: #A9BCF5;
+}
+
 #view {
   background-color: #8181F7;
   border-radius: 12px;
@@ -61,6 +66,12 @@ body {
   width: 30%;
   align-self: center;
 }
+
+#view:hover{
+  background-color: #A9BCF5;
+  border-color: #A9BCF5;
+}
+
 #msg {
   margin-right: 490px;
   font-family: monospace;
@@ -73,6 +84,11 @@ body {
   border-radius: 20px;
 }
 
+#signin:hover {
+  background-color: #A9BCF5;
+  border-color: #A9BCF5;
+}
+
 #enter {
   display: flex;
   flex-direction: row;
@@ -83,12 +99,19 @@ body {
   background-color: #E6E0F8;
   border-color: #E6E0F8;
   color: black;
+  font-size: 17px;
+  margin-left: 650px;
 }
 
 #logform {
   background-color: #8181F7;
   border-color: #8181F7;
   margin-left: 200px;
+}
+
+#logform:hover {
+  background-color: #A9BCF5;
+  border-color: #A9BCF5;
 }
 
 #card.title {
@@ -117,6 +140,11 @@ body {
   border-radius: 20px;
 }
 
+#choosepain:hover{
+  background-color: #A9BCF5;
+  border-color: #A9BCF5;
+}
+
 #closepain{
   border-color: #A9BCF5;
   background-color: #A9BCF5;
@@ -134,7 +162,7 @@ body {
 #footer{
   display: flex;
   flex-direction: column;
-  min-height:8vh;
+  min-height:5vh;
 }
 
 #welcome{
@@ -142,4 +170,14 @@ body {
   flex-direction: column;
   justify-content: center;
   font-size: 14px;
+}
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+  background: #ffff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A9BCF5;
 }

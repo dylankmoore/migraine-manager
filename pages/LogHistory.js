@@ -38,10 +38,10 @@ export default function Logs() {
         <h1><img src="/loghistory.png" alt="create" width="490" height="50" /></h1><br /><hr /><br />
         <div className="logs">
           {logs.map((log) => (
-            <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
+            <LogCard key={log.firebaseKey} painObject={log} onUpdate={getAllLogs} />
           ))}
           <br /><br /><br />
-          <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by dylankmoore</footer>
+          <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by <a href="https://github.com/dylankmoore">dylankmoore</a></footer>
         </div>
       </div>
     </div>

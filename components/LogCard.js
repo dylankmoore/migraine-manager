@@ -5,15 +5,14 @@ import {
   Button, Card, Modal,
 } from 'react-bootstrap';
 import Link from 'next/link';
-import { deleteSingleLog } from '../api/LogData';
-import { getPainLevel, updatePainLevel } from '../api/painData';
+import { deleteSingleLog, updateLog } from '../api/LogData';
+import { getPainLevel } from '../api/painData';
 
-export default function LogCard({ logObj, onUpdate }) {
-  // SETTING STATE VARIABLES
+export default function LogCard({ painObject, onUpdate }) {
+  // SETTING STATE VARIABLES & FUNCTIONS
   const [showPainModal, setShowPainModal] = useState(false);
-  const [selectedPainId, setSelectedPainId] = useState(logObj.painId);
+  const [selectedPainId, setSelectedPainId] = useState(painObject.logObj.painId);
   const [painLevels, setPainLevels] = useState([]);
-  const [painObject, setPainObject] = useState(logObj.painObject);
 
   // FUNCTIONS TO SHOW/HIDE MODAL
   const handleShowModal = () => {
@@ -26,12 +25,12 @@ export default function LogCard({ logObj, onUpdate }) {
   // HANDLING SELECTION OF PAIN LEVELS
   const handlePainLevelSelect = () => {
     if (selectedPainId) {
-      const updatedLogObj = { ...logObj, painId: selectedPainId, painObject };
+      const updatedLogObj = { ...painObject.logObj, painId: selectedPainId };
       // UPDATE LOG WITH PAIN LEVEL
-      updatePainLevel(updatedLogObj)
+      updateLog(updatedLogObj)
         .then(() => {
-          onUpdate(updatedLogObj);
-          // HIDE MODAL UPON SELECTION
+          onUpdate();
+          // HIDE MODAL UPON SELECTION SAVE
           setShowPainModal(false);
         });
     }
@@ -42,16 +41,7 @@ export default function LogCard({ logObj, onUpdate }) {
     getPainLevel().then((data) => {
       setPainLevels(data || []);
     });
-  }, [logObj, painObject]);
-
-  // UPDATE SELECTED PAIN OBJ IF PAIN ID CHANGES
-  useEffect(() => {
-    if (selectedPainId) {
-      const selectedPain = painLevels.find((painLevel) => painLevel.firebaseKey === selectedPainId);
-      // set the painObject with this updated information
-      setPainObject(selectedPain);
-    }
-  }, [painLevels, selectedPainId]);
+  }, [painObject.logObj]);
 
   // generates the array of pain level options and maps through them
   const painLevelOptions = painLevels.map((painLevel) => (
@@ -63,13 +53,13 @@ export default function LogCard({ logObj, onUpdate }) {
   // FUNCTION TO DELETE A LOG
   const deleteThisLog = () => {
     if (window.confirm('Remove this log?')) {
-      deleteSingleLog(logObj.firebaseKey).then(() => onUpdate());
+      deleteSingleLog(painObject.logObj.firebaseKey).then(() => onUpdate());
     }
   };
 
-  const appointmentDate = new Date(logObj.dateTime);
-  const date = appointmentDate.toLocaleDateString();
-  const time = appointmentDate.toLocaleTimeString();
+  const logDate = new Date(painObject.logObj.dateTime);
+  const date = logDate.toLocaleDateString();
+  const time = logDate.toLocaleTimeString();
 
   // LOG CARDS
   return (
@@ -80,14 +70,14 @@ export default function LogCard({ logObj, onUpdate }) {
       >
         <Card.Body>
           <Card.Title><b>{date} {time}</b></Card.Title><br />
-          <p className="card-text"><b>sleep</b>: {logObj.sleep}</p>
-          <p className="card-text"><b>breakfast</b>: {logObj.breakfast}</p>
-          <p className="card-text"><b>lunch</b>: {logObj.lunch}</p>
-          <p className="card-text"><b>dinner</b>: {logObj.dinner}</p>
-          <p className="card-text"><b>exercise</b>: {logObj.exercise}</p>
-          <p className="card-text"><b>notes</b>: {logObj.notes}</p>
+          <p className="card-text"><b>sleep</b>: {painObject.logObj.sleep}</p>
+          <p className="card-text"><b>breakfast</b>: {painObject.logObj.breakfast}</p>
+          <p className="card-text"><b>lunch</b>: {painObject.logObj.lunch}</p>
+          <p className="card-text"><b>dinner</b>: {painObject.logObj.dinner}</p>
+          <p className="card-text"><b>exercise</b>: {painObject.logObj.exercise}</p>
+          <p className="card-text"><b>notes</b>: {painObject.logObj.notes}</p>
           <br />
-          <Button id="choosepain" onClick={handleShowModal}>Choose Pain Level</Button>
+          <Button id="choosepain" onClick={handleShowModal}>{painObject.logObj.painId ? 'Update' : 'Choose'} Pain Level</Button>
 
           <Modal show={showPainModal} onHide={handleCloseModal}>
             <Modal.Header closeButton>
@@ -107,10 +97,10 @@ export default function LogCard({ logObj, onUpdate }) {
               <Button id="closepain" onClick={handleCloseModal}>Close</Button>
             </Modal.Footer>
           </Modal>
-          <p className="card-text"><b>pain level</b>: {logObj.painObject?.level ?? 'none'}</p>
+          <p className="card-text"><b>pain level</b>: {painObject?.level ?? ''}</p>
           <div className="text-center">
             {/* DYNAMIC LINK TO EDIT THE LOG DETAILS  */}
-            <Link href={`/logs/edit/${logObj.firebaseKey}`} passHref>
+            <Link href={`/logs/edit/${painObject.logObj.firebaseKey}`} passHref>
               <Button id="edit"><img src="update.png" alt="edit" title="edit" /></Button>
             </Link>
             <Button id="logdel" className="m-2" onClick={deleteThisLog}><img src="del.png" alt="logo" title="delete" />
@@ -122,20 +112,20 @@ export default function LogCard({ logObj, onUpdate }) {
   );
 }
 LogCard.propTypes = {
-  logObj: PropTypes.shape({
-    firebaseKey: PropTypes.string,
-    logid: PropTypes.string,
-    sleep: PropTypes.string,
-    breakfast: PropTypes.string,
-    lunch: PropTypes.string,
-    dinner: PropTypes.string,
-    exercise: PropTypes.string,
-    notes: PropTypes.string,
-    uid: PropTypes.string,
-    dateTime: PropTypes.string,
-    painId: PropTypes.string,
-    painObject: PropTypes.shape({
-      level: PropTypes.string,
+  painObject: PropTypes.shape({
+    level: PropTypes.string,
+    logObj: PropTypes.shape({
+      firebaseKey: PropTypes.string,
+      logid: PropTypes.string,
+      sleep: PropTypes.string,
+      breakfast: PropTypes.string,
+      lunch: PropTypes.string,
+      dinner: PropTypes.string,
+      exercise: PropTypes.string,
+      notes: PropTypes.string,
+      uid: PropTypes.string,
+      dateTime: PropTypes.string,
+      painId: PropTypes.string,
     }),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

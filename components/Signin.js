@@ -21,7 +21,7 @@ function Signin() {
         Sign In
       </Button>
       <br /><br /><br />
-      <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by dylankmoore</footer>
+      <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by <a href="https://github.com/dylankmoore">dylankmoore</a></footer>
     </div>
   );
 }
