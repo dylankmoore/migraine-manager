@@ -30,33 +30,7 @@ const createLogSymptom = (logId, symptomId) => fetch(`${endpoint}/logsymptoms.js
   });
 
 // GET SYMPTOMS ASSOCIATED W MULTIPLE LOGS
-const getSymptomsLinkedToMultipleLogs = () => fetch(`${endpoint}/logsymptoms.json`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then((response) => response.json())
-  .then((data) => {
-    const symptomOccurrences = {};
-
-    // Count occurrences of each symptom ID in logs
-    data.forEach((entry) => {
-      const { symptomId } = entry;
-      symptomOccurrences[symptomId] = (symptomOccurrences[symptomId] || 0) + 1;
-    });
-
-    // Filter symptoms that appear in multiple logs (occurrences > 1)
-    const multipleLogSymptoms = Object.keys(symptomOccurrences).filter(
-      (symptomId) => symptomOccurrences[symptomId] > 1,
-    );
-
-    return multipleLogSymptoms;
-  })
-  .catch((error) => {
-    console.error('Error retrieving symptoms linked to multiple logs:', error);
-    throw error;
-  });
+//
 
 const getSymptomsLinkedToSingleLog = (logId) => fetch(`${endpoint}/logsymptoms.json?logId=${logId}`, {
   method: 'GET',
@@ -74,6 +48,5 @@ const getSymptomsLinkedToSingleLog = (logId) => fetch(`${endpoint}/logsymptoms.j
 export {
   getLogSymptoms,
   createLogSymptom,
-  getSymptomsLinkedToMultipleLogs,
   getSymptomsLinkedToSingleLog,
 };
