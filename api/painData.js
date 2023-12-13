@@ -36,38 +36,26 @@ const getPainLevel = (painId = null) => {
   });
 };
 
-// UPDATE PAIN LEVELS
-const updatePainLevel = (payload) => Promise.all([
-  // performing two different calls using the promise.all so that we can update both the log & pain data
-
-  // updating the log
-  new Promise((resolve, reject) => {
-    fetch(`${endpoint}/logdata/${payload.firebaseKey}.json`, {
-      method: 'PATCH',
+// GET ALL PAIN LEVELS
+const getPainLevels = () => {
+  const url = `${endpoint}/paindata.json`;
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
     })
       .then((response) => response.json())
-      .then((data) => resolve(data))
+      .then((data) => {
+        if (data) {
+          resolve(Object.values(data));
+        } else {
+          resolve([]);
+        }
+      })
       .catch(reject);
-  }), // associating log ids with pain ids
-  new Promise((resolve, reject) => {
-    fetch(`${endpoint}/paindata/${payload.painId}/logIds/${payload.firebaseKey}.json`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ firebaseKey: payload.firebaseKey }),
-    })
-      .then((response) => response.json())
-      .then((data) => resolve(data))
-      .catch(reject);
-  }),
-]);
-
-export {
-  getPainLevel,
-  updatePainLevel,
+  });
 };
+
+export { getPainLevel, getPainLevels };
