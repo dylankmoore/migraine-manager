@@ -14,7 +14,7 @@ export default function LogCard({ painObject, onUpdate }) {
   const [selectedPainId, setSelectedPainId] = useState(painObject.logObj.painId);
   const [painLevels, setPainLevels] = useState([]);
 
-  // FUNCTIONS TO SHOW/HIDE MODAL
+  // FUNCTIONS TO SHOW/HIDE PAIN MODAL
   const handleShowModal = () => {
     setShowPainModal(true);
   };
@@ -99,6 +99,8 @@ export default function LogCard({ painObject, onUpdate }) {
           </Modal>
           <p className="card-text"><b>pain level</b>: {painObject?.level ?? ''}</p>
           <div className="text-center">
+            <br />
+
             {/* DYNAMIC LINK TO EDIT THE LOG DETAILS  */}
             <Link href={`/logs/edit/${painObject.logObj.firebaseKey}`} passHref>
               <Button id="edit"><img src="update.png" alt="edit" title="edit" /></Button>

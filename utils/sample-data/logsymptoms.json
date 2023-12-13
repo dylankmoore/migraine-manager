@@ -1,0 +1,32 @@
+{
+  "-NlVJZH2zUc7rYFz2V1j": {
+    "firebaseKey":  "-NlVJZH2zUc7rYFz2V1j",
+    "logId": "",
+    "symptomId": ""
+  },
+  "-NlVJZH3M6-vL71_2Naa": {
+    "firebaseKey": "-NlVJZH3M6-vL71_2Naa",
+    "logId": "",
+    "symptomId": ""
+  },
+  "-NlVJZH4N7g5RPDjlyv5": {
+    "firebaseKey": "-NlVJZH4N7g5RPDjlyv5",
+    "logId": "",
+    "symptomId": ""
+  },
+  "-NlVJZH4N7g5RPDjlyv6": {
+    "firebaseKey": "-NlVJZH4N7g5RPDjlyv6",
+    "logId": "AS",
+    "symptomId": "EU"
+  },
+  "-NlVJZH4N7g5RPDjlyv7": {
+    "firebaseKey": "-NlVJZH4N7g5RPDjlyv7",
+    "logId": "AS",
+    "symptomId": "AS"
+  },
+  "-NlVJZH4N7g5RPDjlyv8": {
+    "firebaseKey":  "-NlVJZH4N7g5RPDjlyv8",
+    "logId": "NA",
+    "symptomId": "AF"
+  }
+}

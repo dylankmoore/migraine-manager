@@ -19,5 +19,8 @@ const viewPainDetails = (logFirebaseKey) => new Promise((resolve, reject) => {
     }).catch((error) => reject(error));
 });
 
+// GET SYMPTOMS BASED ON SINGLE LOG
+// need to add this promise
+
 export default
 viewPainDetails;
