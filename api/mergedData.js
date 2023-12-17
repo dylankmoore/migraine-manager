@@ -1,26 +1,29 @@
 import { getPainLevel } from './painData';
 import { getSingleLog } from './LogData';
+import { getLogSymptoms } from './logSymptomsData';
 
 // GET PAIN DETAILS BASED ON LOGS
-const viewPainDetails = (logFirebaseKey) => new Promise((resolve, reject) => {
-  // fetch log entry based on fbkey
-  getSingleLog(logFirebaseKey)
-    .then((logObj) => {
-      // if a log id has an associated pain id, fetch that data
-      if (logObj.painId) {
-        getPainLevel(logObj.painId)
-          .then((painObject) => {
-            resolve({ ...painObject, logObj });
-          }).catch((error) => reject(error));
-      } else {
-        // if no pain id, set the object to a null value
-        resolve({ painObject: null, logObj });
-      }
-    }).catch((error) => reject(error));
-});
+const viewPainDetails = async (logFirebaseKey) => {
+  const log = await getSingleLog(logFirebaseKey);
+  const painObj = await getPainLevel(log.painId);
+  return { ...log, painObj };
+};
 
-// GET SYMPTOMS BASED ON SINGLE LOG
-//
+// GET SYMPTOM DETAILS BASED ON LOGS
+const viewSymptomDetails = async (logFirebaseKey) => {
+  try {
+    const log = await getSingleLog(logFirebaseKey);
+    const logSymptomsObject = await getLogSymptoms(logFirebaseKey);
+    const symptomValues = Object.values(logSymptomsObject);
+    // MERGING SYMPTOM DETAILS W LOG OBJECT
+    return { ...log, logSymptoms: symptomValues };
+  } catch (error) {
+    console.error('Error fetching symptom details:', error);
+    throw error;
+  }
+};
 
-export default
-viewPainDetails;
+export {
+  viewPainDetails,
+  viewSymptomDetails,
+};

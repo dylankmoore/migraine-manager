@@ -63,6 +63,7 @@ const deleteSingleLog = (firebaseKey) => new Promise((resolve, reject) => {
 
 // UPDATE LOG
 const updateLog = (payload) => new Promise((resolve, reject) => {
+  console.warn(payload.painId);
   fetch(`${endpoint}/logdata/${payload.firebaseKey}.json`, {
     method: 'PATCH',
     headers: {

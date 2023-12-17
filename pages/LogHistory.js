@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import LogCard from '../components/LogCard';
 import { getLogs } from '../api/LogData';
-import viewPainDetails from '../api/mergedData';
+import { viewPainDetails } from '../api/mergedData';
+import { getLogSymptoms } from '../api/logSymptomsData';
 
 // FUNCTION TO SHOW ALL LOGS
 export default function Logs() {
@@ -13,9 +14,18 @@ export default function Logs() {
   const { user } = useAuth();
 
   const getAllLogs = () => {
-    getLogs(user.uid).then((logList) => {
-      Promise.all(logList.map((log) => viewPainDetails(log.firebaseKey)))
-        .then(setLogs);
+    getLogs(user.uid).then(async (logList) => {
+      const logsWithData = await Promise.all(
+        logList.map(async (log) => {
+          const logObj = await viewPainDetails(log.firebaseKey);
+          const logSymptoms = await getLogSymptoms(log.firebaseKey);
+          const symptomValues = Object.values(logSymptoms);
+          return { ...logObj, logSymptoms: symptomValues, firebaseKey: log.firebaseKey };
+        }),
+      );
+      logsWithData.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+
+      setLogs(logsWithData);
     });
   };
 
@@ -38,7 +48,7 @@ export default function Logs() {
         <h1><img src="/loghistory.png" alt="create" width="490" height="50" /></h1><br /><hr /><br />
         <div className="logs">
           {logs.map((log) => (
-            <LogCard key={log.firebaseKey} painObject={log} onUpdate={getAllLogs} />
+            <LogCard key={log.firebaseKey} logObj={log} onUpdate={getAllLogs} />
           ))}
           <br /><br /><br />
           <footer style={{ fontSize: '12px' }}>© 2023 migraine manager by <a href="https://github.com/dylankmoore">dylankmoore</a></footer>
