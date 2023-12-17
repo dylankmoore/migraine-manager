@@ -2,6 +2,7 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
+// GET ALL SYMPTOMS
 const getSymptoms = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/symptomdata.json`, {
     method: 'GET',
@@ -20,19 +21,5 @@ const getSymptoms = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getSingleSymptom = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/symptomdata/${firebaseKey}.json`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => resolve(data))
-    .catch(reject);
-});
-
-export {
-  getSymptoms,
-  getSingleSymptom,
-};
+export default
+getSymptoms;

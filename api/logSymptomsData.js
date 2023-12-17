@@ -2,20 +2,35 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-// GET LOG'S SYMPTOMS
-const getLogSymptoms = (logId) => fetch(`${endpoint}/logsymptoms.json?logId=${logId}`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then((response) => response.json())
-  .catch((error) => {
-    console.error('Error retrieving log-symptoms:', error);
-    throw error;
-  });
+// GET LOG SYMPTOMS
+const getLogSymptoms = (logId) => new Promise((resolve, reject) => {
+  const url = `${endpoint}/logsymptoms.json?orderBy="logId"&equalTo="${logId}"`;
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
 
-// CREATE LOG SYMPTOM ASSOCIATION
+// UPDATE LOG SYMPTOMS
+const updateLogSymptom = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/logsymptoms/${payload.firebaseKey}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+// CREATE LOG/SYMPTOM ASSOCIATION
 const createLogSymptom = (logId, symptomId) => fetch(`${endpoint}/logsymptoms.json`, {
   method: 'POST',
   headers: {
@@ -24,29 +39,28 @@ const createLogSymptom = (logId, symptomId) => fetch(`${endpoint}/logsymptoms.js
   body: JSON.stringify({ logId, symptomId }),
 })
   .then((response) => response.json())
+  .then((data) => {
+    const payload = {
+      firebaseKey: data.name,
+    };
+    return updateLogSymptom(payload);
+  })
   .catch((error) => {
-    console.error('Error creating log-symptom:', error);
+    console.error('Error creating log symptom:', error);
     throw error;
   });
 
-// GET SYMPTOMS ASSOCIATED W MULTIPLE LOGS
-//
+// DELETE SINGLE SYMPTOMS IN LOG
+const deleteSingleLogSymptom = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/logsymptoms/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
 
-const getSymptomsLinkedToSingleLog = (logId) => fetch(`${endpoint}/logsymptoms.json?logId=${logId}`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then((response) => response.json())
-  .then((data) => data)
-  .catch((error) => {
-    console.error('Error retrieving symptoms linked to a single log:', error);
-    throw error;
-  });
-
-export {
-  getLogSymptoms,
-  createLogSymptom,
-  getSymptomsLinkedToSingleLog,
-};
+export { getLogSymptoms, createLogSymptom, deleteSingleLogSymptom };

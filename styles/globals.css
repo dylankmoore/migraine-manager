@@ -181,3 +181,24 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #A9BCF5;
 }
+
+#symptoms {
+  background-color:#8181F7;
+  border-color: #8181F7;
+  border-radius: 20px;
+}
+
+#savesymptom {
+background-color:#A9BCF5;
+border-color: #A9BCF5;
+}
+
+#closesymptom {
+background-color:#A9BCF5;
+border-color: #A9BCF5;
+}
+
+#symptoms:hover {
+  background-color: #A9BCF5;
+  border-color: #A9BCF5;
+}

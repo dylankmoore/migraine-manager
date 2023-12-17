@@ -7,12 +7,19 @@ import {
 import Link from 'next/link';
 import { deleteSingleLog, updateLog } from '../api/LogData';
 import { getPainLevel } from '../api/painData';
+import getSymptoms from '../api/symptomData';
+import { createLogSymptom, deleteSingleLogSymptom } from '../api/logSymptomsData';
 
-export default function LogCard({ painObject, onUpdate }) {
-  // SETTING STATE VARIABLES & FUNCTIONS
+export default function LogCard({ logObj, onUpdate }) {
+  // SETTING STATE VARIABLES & FUNCTIONS FOR PAIN LVLS
   const [showPainModal, setShowPainModal] = useState(false);
-  const [selectedPainId, setSelectedPainId] = useState(painObject.logObj.painId);
+  const [selectedPainId, setSelectedPainId] = useState({ ...logObj.painId });
   const [painLevels, setPainLevels] = useState([]);
+
+  // SETTING STATE FOR SYMPTOMS
+  const [showSymptomModal, setShowSymptomModal] = useState(false);
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [symptoms, setSymptoms] = useState([]);
 
   // FUNCTIONS TO SHOW/HIDE PAIN MODAL
   const handleShowModal = () => {
@@ -22,18 +29,25 @@ export default function LogCard({ painObject, onUpdate }) {
     setShowPainModal(false);
   };
 
+  // FUNCTIONS TO SHOW/HIDE SYMPTOMS MODAL
+  const handleShowSymptomModal = () => {
+    setShowSymptomModal(true);
+  };
+  const handleCloseSymptomModal = () => {
+    setShowSymptomModal(false);
+  };
+
   // HANDLING SELECTION OF PAIN LEVELS
-  const handlePainLevelSelect = () => {
-    if (selectedPainId) {
-      const updatedLogObj = { ...painObject.logObj, painId: selectedPainId };
-      // UPDATE LOG WITH PAIN LEVEL
-      updateLog(updatedLogObj)
-        .then(() => {
-          onUpdate();
-          // HIDE MODAL UPON SELECTION SAVE
-          setShowPainModal(false);
-        });
-    }
+  const handlePainLevelSelect = (painId) => {
+    console.warn(painId, 'old');
+    const updatedLogObj = { ...logObj, painId: selectedPainId };
+    // UPDATE LOG WITH PAIN LEVEL
+    updateLog(updatedLogObj)
+      .then(() => {
+        onUpdate();
+        // HIDE MODAL UPON SELECTION SAVE
+        setShowPainModal(false);
+      });
   };
 
   // FETCH PAIN LEVEL DATA & UPDATE STATE
@@ -41,7 +55,21 @@ export default function LogCard({ painObject, onUpdate }) {
     getPainLevel().then((data) => {
       setPainLevels(data || []);
     });
-  }, [painObject.logObj]);
+  }, [logObj]);
+
+  // FETCH SYMPTOMS DATA
+  useEffect(() => {
+    getSymptoms().then((data) => {
+      setSymptoms(data || []);
+    });
+  }, []);
+
+  // UPDATE THE SELECT SYMPTOMS STATE
+  useEffect(() => {
+    if (logObj.logSymptoms) {
+      setSelectedSymptoms(logObj.logSymptoms.map((logSymptom) => logSymptom.symptomId));
+    }
+  }, [logObj.logSymptoms]);
 
   // generates the array of pain level options and maps through them
   const painLevelOptions = painLevels.map((painLevel) => (
@@ -50,16 +78,65 @@ export default function LogCard({ painObject, onUpdate }) {
     </option>
   ));
 
+  // GET SELECTED SYMPTOMS & MAP THROUGH THEM
+  const selectedSymptomObjects = selectedSymptoms
+    .map((symptomId) => symptoms.find((symptom) => symptom.firebaseKey === symptomId))
+    .filter(Boolean);
+
+  // CREATING DISPLAY VIEW OF SELECTED SYMPTOMS
+  const selectedSymptomViews = selectedSymptomObjects.map((symptomObject, index) => (
+    // if the index is greater than zero, seperate symptoms with space and comma
+    <span key={symptomObject.firebaseKey}>
+      {index > 0 && ', '}
+      {symptomObject.symptom}
+    </span>
+  ));
+
+  // FUNCTION TO HANDLE SYMPTOMS SELECTION
+  const handleSymptomSelection = (symptomId) => {
+    const updatedSymptoms = selectedSymptoms.includes(symptomId)
+      ? selectedSymptoms.filter((id) => id !== symptomId)
+      : [...selectedSymptoms, symptomId];
+
+    setSelectedSymptoms(updatedSymptoms);
+  };
+
+  // FUNCTION TO SAVE SELECTED SYMPTOMS
+  const handleSaveSymptoms = () => {
+    const newSymptomIds = selectedSymptoms.filter(
+      (symptomId) => !logObj.logSymptoms.some((logSymptom) => logSymptom.symptomId === symptomId),
+    );
+
+    // FILTERING TO CHECK FOR IDS NOT SELECTED
+    const cancelledLogsymptomObjects = logObj.logSymptoms.filter(
+      (logSymptom) => !selectedSymptoms.includes(logSymptom.symptomId),
+    );
+    // MAPPING OVER CANCELLED SYMPTOMS
+    const cancelledLogsymptomIds = cancelledLogsymptomObjects.map((obj) => obj.firebaseKey);
+
+    // REMOVING CANCELLED SYMPTOMS
+    const deleteCancelledSymptoms = cancelledLogsymptomIds.map((firebaseKey) => deleteSingleLogSymptom(firebaseKey));
+
+    Promise.all([
+      ...newSymptomIds.map((symptomId) => createLogSymptom(logObj.firebaseKey, symptomId)),
+      ...deleteCancelledSymptoms,
+    ])
+      .then(() => {
+        onUpdate();
+        handleCloseSymptomModal();
+      });
+  };
+
+  const logDate = new Date(logObj.dateTime);
+  const date = logDate.toLocaleDateString();
+  const time = logDate.toLocaleTimeString();
+
   // FUNCTION TO DELETE A LOG
   const deleteThisLog = () => {
     if (window.confirm('Remove this log?')) {
-      deleteSingleLog(painObject.logObj.firebaseKey).then(() => onUpdate());
+      deleteSingleLog(logObj.firebaseKey).then(() => onUpdate());
     }
   };
-
-  const logDate = new Date(painObject.logObj.dateTime);
-  const date = logDate.toLocaleDateString();
-  const time = logDate.toLocaleTimeString();
 
   // LOG CARDS
   return (
@@ -70,14 +147,14 @@ export default function LogCard({ painObject, onUpdate }) {
       >
         <Card.Body>
           <Card.Title><b>{date} {time}</b></Card.Title><br />
-          <p className="card-text"><b>sleep</b>: {painObject.logObj.sleep}</p>
-          <p className="card-text"><b>breakfast</b>: {painObject.logObj.breakfast}</p>
-          <p className="card-text"><b>lunch</b>: {painObject.logObj.lunch}</p>
-          <p className="card-text"><b>dinner</b>: {painObject.logObj.dinner}</p>
-          <p className="card-text"><b>exercise</b>: {painObject.logObj.exercise}</p>
-          <p className="card-text"><b>notes</b>: {painObject.logObj.notes}</p>
+          <p className="card-text"><b>sleep</b>: {logObj.sleep}</p>
+          <p className="card-text"><b>breakfast</b>: {logObj.breakfast}</p>
+          <p className="card-text"><b>lunch</b>: {logObj.lunch}</p>
+          <p className="card-text"><b>dinner</b>: {logObj.dinner}</p>
+          <p className="card-text"><b>exercise</b>: {logObj.exercise}</p>
+          <p className="card-text"><b>notes</b>: {logObj.notes}</p>
           <br />
-          <Button id="choosepain" onClick={handleShowModal}>{painObject.logObj.painId ? 'Update' : 'Choose'} Pain Level</Button>
+          <Button id="choosepain" onClick={handleShowModal}>{logObj.painId ? 'Update' : 'Choose'} Pain Level</Button>
 
           <Modal show={showPainModal} onHide={handleCloseModal}>
             <Modal.Header closeButton>
@@ -85,6 +162,8 @@ export default function LogCard({ painObject, onUpdate }) {
             </Modal.Header>
             <Modal.Body>
               <select
+                id="painlevelid"
+                name="levelkey"
                 value={selectedPainId}
                 onChange={(e) => setSelectedPainId(e.target.value)}
               >
@@ -93,16 +172,54 @@ export default function LogCard({ painObject, onUpdate }) {
               </select>
             </Modal.Body>
             <Modal.Footer>
-              <Button id="savepain" onClick={handlePainLevelSelect}>Save</Button>
+              <Button id="savepain" onClick={() => handlePainLevelSelect(selectedPainId)}>Save</Button>
               <Button id="closepain" onClick={handleCloseModal}>Close</Button>
             </Modal.Footer>
           </Modal>
-          <p className="card-text"><b>pain level</b>: {painObject?.level ?? ''}</p>
-          <div className="text-center">
-            <br />
+          <p className="card-text"><b>pain level</b>: {logObj.painObj?.level ?? ''}</p>
+          <br />
 
+          {/* Button to open SymptomModal */}
+          <Button id="symptoms" type="button" onClick={handleShowSymptomModal}>{selectedSymptoms.length > 0 ? 'Update' : 'Choose'} Symptoms</Button>
+
+          {/* SYMPTOMS MODAL */}
+          <Modal show={showSymptomModal} onHide={handleCloseSymptomModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Select Symptoms</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              {symptoms.map((symptom) => (
+                <div key={symptom.firebaseKey}>
+                  <label>
+                    <input
+                      id={`symptom_${symptom.firebaseKey}`}
+                      name="symptom"
+                      type="checkbox"
+                      checked={selectedSymptoms.includes(symptom.firebaseKey)}
+                      onChange={() => handleSymptomSelection(symptom.firebaseKey)}
+                    />&nbsp;
+                    {symptom.symptom}
+                  </label>
+                </div>
+              ))}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button type="button" id="savesymptom" onClick={handleSaveSymptoms}>
+                Save
+              </Button>
+              <Button type="button" id="closesymptom" onClick={handleCloseSymptomModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <p className="card-text">
+            <b>symptoms</b>:&nbsp;
+            {selectedSymptomViews}
+          </p>
+
+          <div className="text-center">
             {/* DYNAMIC LINK TO EDIT THE LOG DETAILS  */}
-            <Link href={`/logs/edit/${painObject.logObj.firebaseKey}`} passHref>
+            <Link href={`/logs/edit/${logObj.firebaseKey}`} passHref>
               <Button id="edit"><img src="update.png" alt="edit" title="edit" /></Button>
             </Link>
             <Button id="logdel" className="m-2" onClick={deleteThisLog}><img src="del.png" alt="logo" title="delete" />
@@ -114,21 +231,29 @@ export default function LogCard({ painObject, onUpdate }) {
   );
 }
 LogCard.propTypes = {
-  painObject: PropTypes.shape({
-    level: PropTypes.string,
-    logObj: PropTypes.shape({
+  logObj: PropTypes.shape({
+    firebaseKey: PropTypes.string,
+    logid: PropTypes.string,
+    sleep: PropTypes.string,
+    breakfast: PropTypes.string,
+    lunch: PropTypes.string,
+    dinner: PropTypes.string,
+    exercise: PropTypes.string,
+    notes: PropTypes.string,
+    uid: PropTypes.string,
+    dateTime: PropTypes.string,
+    painId: PropTypes.string,
+    painObj: PropTypes.shape({
+      level: PropTypes.string,
       firebaseKey: PropTypes.string,
-      logid: PropTypes.string,
-      sleep: PropTypes.string,
-      breakfast: PropTypes.string,
-      lunch: PropTypes.string,
-      dinner: PropTypes.string,
-      exercise: PropTypes.string,
-      notes: PropTypes.string,
-      uid: PropTypes.string,
-      dateTime: PropTypes.string,
-      painId: PropTypes.string,
     }),
+    logSymptoms: PropTypes.arrayOf(
+      PropTypes.shape({
+        firebaseKey: PropTypes.string,
+        logId: PropTypes.string,
+        symptomId: PropTypes.string,
+      }),
+    ),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
