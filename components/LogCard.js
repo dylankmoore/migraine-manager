@@ -13,12 +13,12 @@ import { createLogSymptom, deleteSingleLogSymptom } from '../api/logSymptomsData
 export default function LogCard({ logObj, onUpdate }) {
   // SETTING STATE VARIABLES & FUNCTIONS FOR PAIN LVLS
   const [showPainModal, setShowPainModal] = useState(false);
-  const [selectedPainId, setSelectedPainId] = useState({ ...logObj.painId });
+  const [selectedPainId, setSelectedPainId] = useState(logObj.painId || '');
   const [painLevels, setPainLevels] = useState([]);
 
   // SETTING STATE FOR SYMPTOMS
   const [showSymptomModal, setShowSymptomModal] = useState(false);
-  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [selectedSymptoms, setSelectedSymptoms] = useState(logObj.logSymptoms || []);
   const [symptoms, setSymptoms] = useState([]);
 
   // FUNCTIONS TO SHOW/HIDE PAIN MODAL
@@ -40,9 +40,9 @@ export default function LogCard({ logObj, onUpdate }) {
   // HANDLING SELECTION OF PAIN LEVELS
   const handlePainLevelSelect = (painId) => {
     console.warn(painId, 'old');
-    const updatedLogObj = { ...logObj, painId: selectedPainId };
+    setSelectedPainId(painId);
     // UPDATE LOG WITH PAIN LEVEL
-    updateLog(updatedLogObj)
+    updateLog({ ...logObj, painId })
       .then(() => {
         onUpdate();
         // HIDE MODAL UPON SELECTION SAVE
@@ -60,6 +60,7 @@ export default function LogCard({ logObj, onUpdate }) {
   // FETCH SYMPTOMS DATA
   useEffect(() => {
     getSymptoms().then((data) => {
+      console.warn('Fetched symptoms:', data);
       setSymptoms(data || []);
     });
   }, []);
@@ -91,24 +92,35 @@ export default function LogCard({ logObj, onUpdate }) {
       {symptomObject.symptom}
     </span>
   ));
+  console.warn('selectedSymptomObjects:', selectedSymptomObjects);
 
   // FUNCTION TO HANDLE SYMPTOMS SELECTION
   const handleSymptomSelection = (symptomId) => {
-    const updatedSymptoms = selectedSymptoms.includes(symptomId)
-      ? selectedSymptoms.filter((id) => id !== symptomId)
-      : [...selectedSymptoms, symptomId];
+    setSelectedSymptoms((prevSymptoms) => {
+      const updatedSymptoms = [...prevSymptoms];
 
-    setSelectedSymptoms(updatedSymptoms);
+      if (updatedSymptoms.includes(symptomId)) {
+        const index = updatedSymptoms.indexOf(symptomId);
+        updatedSymptoms.splice(index, 1); // Remove the selected symptom
+      } else {
+        updatedSymptoms.push(symptomId); // Add the selected symptom
+      }
+
+      return updatedSymptoms;
+    });
   };
 
   // FUNCTION TO SAVE SELECTED SYMPTOMS
   const handleSaveSymptoms = () => {
+    // Filter new symptom IDs that are not already present in the log
+    console.warn('Selected Symptoms before update:', selectedSymptoms);
+
     const newSymptomIds = selectedSymptoms.filter(
-      (symptomId) => !logObj.logSymptoms.some((logSymptom) => logSymptom.symptomId === symptomId),
+      (symptomId) => !(logObj.logSymptoms?.some((logSymptom) => logSymptom.symptomId === symptomId)),
     );
 
     // FILTERING TO CHECK FOR IDS NOT SELECTED
-    const cancelledLogsymptomObjects = logObj.logSymptoms.filter(
+    const cancelledLogsymptomObjects = (logObj.logSymptoms || []).filter(
       (logSymptom) => !selectedSymptoms.includes(logSymptom.symptomId),
     );
     // MAPPING OVER CANCELLED SYMPTOMS
@@ -122,8 +134,12 @@ export default function LogCard({ logObj, onUpdate }) {
       ...deleteCancelledSymptoms,
     ])
       .then(() => {
+        console.warn('Updated Symptoms:', selectedSymptoms);
         onUpdate();
         handleCloseSymptomModal();
+      })
+      .catch((error) => {
+        console.error('Error saving symptoms:', error);
       });
   };
 
@@ -176,7 +192,8 @@ export default function LogCard({ logObj, onUpdate }) {
               <Button id="closepain" onClick={handleCloseModal}>Close</Button>
             </Modal.Footer>
           </Modal>
-          <p className="card-text"><b>pain level</b>: {logObj.painObj?.level ?? ''}</p>
+          <p className="card-text"><b>pain level</b>: {painLevels.find((pain) => pain.firebaseKey === selectedPainId)?.level || ''}
+          </p>
           <br />
 
           {/* Button to open SymptomModal */}
@@ -243,17 +260,13 @@ LogCard.propTypes = {
     uid: PropTypes.string,
     dateTime: PropTypes.string,
     painId: PropTypes.string,
-    painObj: PropTypes.shape({
-      level: PropTypes.string,
-      firebaseKey: PropTypes.string,
-    }),
     logSymptoms: PropTypes.arrayOf(
       PropTypes.shape({
         firebaseKey: PropTypes.string,
         logId: PropTypes.string,
         symptomId: PropTypes.string,
       }),
-    ),
+    ).isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
