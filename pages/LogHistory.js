@@ -5,7 +5,7 @@ import { useAuth } from '../utils/context/authContext';
 import LogCard from '../components/LogCard';
 import { getLogs } from '../api/LogData';
 import { viewPainDetails } from '../api/mergedData';
-import { getLogSymptoms } from '../api/logSymptomsData';
+// import { getLogSymptoms } from '../api/logSymptomsData';
 
 // FUNCTION TO SHOW ALL LOGS
 export default function Logs() {
@@ -18,13 +18,10 @@ export default function Logs() {
       const logsWithData = await Promise.all(
         logList.map(async (log) => {
           const logObj = await viewPainDetails(log.firebaseKey);
-          const logSymptoms = await getLogSymptoms(log.firebaseKey);
-          const symptomValues = Object.values(logSymptoms);
-          return { ...logObj, logSymptoms: symptomValues, firebaseKey: log.firebaseKey };
+          return { ...logObj, firebaseKey: log.firebaseKey };
         }),
       );
       logsWithData.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
-
       setLogs(logsWithData);
     });
   };
