@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
 import LogCard from '../components/LogCard';
 import { getLogs } from '../api/LogData';
-import { viewPainDetails } from '../api/mergedData';
-// import { getLogSymptoms } from '../api/logSymptomsData';
+import { viewPainDetails, viewSymptomDetails } from '../api/mergedData';
 
 // FUNCTION TO SHOW ALL LOGS
 export default function Logs() {
@@ -17,11 +16,18 @@ export default function Logs() {
     getLogs(user.uid).then(async (logList) => {
       const logsWithData = await Promise.all(
         logList.map(async (log) => {
-          const logObj = await viewPainDetails(log.firebaseKey);
-          return { ...logObj, firebaseKey: log.firebaseKey };
+          const painDetails = await viewPainDetails(log.firebaseKey);
+          return { ...painDetails, firebaseKey: log.firebaseKey };
         }),
       );
       logsWithData.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+
+      // Fetch and process symptom details separately (not incorporated into log data)
+      logs.forEach(async (log) => {
+        const symptomDetails = await viewSymptomDetails(log.firebaseKey);
+        console.warn('Symptom Details:', symptomDetails);
+      });
+
       setLogs(logsWithData);
     });
   };

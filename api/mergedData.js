@@ -6,27 +6,21 @@ import { getLogSymptoms } from './logSymptomsData';
 
 const viewPainDetails = async (logFirebaseKey) => {
   const log = await getSingleLog(logFirebaseKey);
-  const painObj = await getPainLevel(log.painId);
-  return { ...log, painObj };
+  const pain = await getPainLevel(log.painId);
+  return { ...log, painId: pain.firebaseKey };
 };
 
 // GET SYMPTOM DETAILS BASED ON LOGS
-const viewSymptomDetails = (logFirebaseKey) => new Promise((resolve, reject) => getLogSymptoms(logFirebaseKey)
-  .then((logSymptomsObject) => Object.values(logSymptomsObject))
-  .catch((error) => reject(error)));
-// const viewSymptomDetails = async (logFirebaseKey) => {
-//   try {
-//     const log = await getSingleLog(logFirebaseKey);
-//     const logSymptomsObject = await getLogSymptoms(logFirebaseKey);
-//     const symptomValues = Object.values(logSymptomsObject);
-//     // MERGING SYMPTOM DETAILS W LOG OBJECT
-//     return { ...log, logSymptoms: symptomValues };
-//   } catch (error) {
-//     // Handle errors appropriately
-//     console.error('Error fetching symptom details:', error);
-//     throw error;
-//   }
-// };
+const viewSymptomDetails = async (logFirebaseKey) => {
+  try {
+    const log = await getSingleLog(logFirebaseKey);
+    const symptomDetails = await getLogSymptoms(logFirebaseKey);
+    return { log, symptomDetails };
+  } catch (error) {
+    console.error('Error fetching symptom details:', error);
+    throw error;
+  }
+};
 
 export {
   viewPainDetails,

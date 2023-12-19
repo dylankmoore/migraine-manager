@@ -20,6 +20,7 @@ export default function LogCard({ logObj, onUpdate }) {
   const [showSymptomModal, setShowSymptomModal] = useState(false);
   const [selectedSymptoms, setSelectedSymptoms] = useState(logObj.logSymptoms || []);
   const [symptoms, setSymptoms] = useState([]);
+  const [selectAllSymptoms, setSelectAllSymptoms] = useState(false);
 
   // FUNCTIONS TO SHOW/HIDE PAIN MODAL
   const handleShowModal = () => {
@@ -39,7 +40,6 @@ export default function LogCard({ logObj, onUpdate }) {
 
   // HANDLING SELECTION OF PAIN LEVELS
   const handlePainLevelSelect = (painId) => {
-    console.warn(painId, 'old');
     setSelectedPainId(painId);
     // UPDATE LOG WITH PAIN LEVEL
     updateLog({ ...logObj, painId })
@@ -60,10 +60,15 @@ export default function LogCard({ logObj, onUpdate }) {
   // FETCH SYMPTOMS DATA
   useEffect(() => {
     getSymptoms().then((data) => {
-      console.warn('Fetched symptoms:', data);
       setSymptoms(data || []);
     });
-  }, []);
+
+    // RETRIEVE PREVIOUS SYMPTOMS FROM LOCAL STORAGE
+    const storedSymptoms = localStorage.getItem(`log_${logObj.firebaseKey}_symptoms`);
+    if (storedSymptoms) {
+      setSelectedSymptoms(JSON.parse(storedSymptoms));
+    }
+  }, [logObj]);
 
   // UPDATE THE SELECT SYMPTOMS STATE
   useEffect(() => {
@@ -92,7 +97,6 @@ export default function LogCard({ logObj, onUpdate }) {
       {symptomObject.symptom}
     </span>
   ));
-  console.warn('selectedSymptomObjects:', selectedSymptomObjects);
 
   // FUNCTION TO HANDLE SYMPTOMS SELECTION
   const handleSymptomSelection = (symptomId) => {
@@ -113,11 +117,12 @@ export default function LogCard({ logObj, onUpdate }) {
   // FUNCTION TO SAVE SELECTED SYMPTOMS
   const handleSaveSymptoms = () => {
     // Filter new symptom IDs that are not already present in the log
-    console.warn('Selected Symptoms before update:', selectedSymptoms);
-
     const newSymptomIds = selectedSymptoms.filter(
       (symptomId) => !(logObj.logSymptoms?.some((logSymptom) => logSymptom.symptomId === symptomId)),
     );
+
+    // SAVE SELECTIONS IN LOCAL STORAGE
+    localStorage.setItem(`log_${logObj.firebaseKey}_symptoms`, JSON.stringify(selectedSymptoms));
 
     // FILTERING TO CHECK FOR IDS NOT SELECTED
     const cancelledLogsymptomObjects = (logObj.logSymptoms || []).filter(
@@ -134,13 +139,30 @@ export default function LogCard({ logObj, onUpdate }) {
       ...deleteCancelledSymptoms,
     ])
       .then(() => {
-        console.warn('Updated Symptoms:', selectedSymptoms);
         onUpdate();
         handleCloseSymptomModal();
       })
       .catch((error) => {
-        console.error('Error saving symptoms:', error);
+        console.error('An error occurred:', error);
       });
+  };
+
+  // Function to handle selecting or deselecting all symptoms
+  const handleSelectAllSymptoms = () => {
+    setSelectedSymptoms((prevSymptoms) => {
+      const updatedSymptoms = [...prevSymptoms];
+
+      // Toggle between selecting or deselecting all symptoms
+      if (selectAllSymptoms) {
+        updatedSymptoms.splice(0); // Empty the array to deselect all symptoms
+      } else {
+        setSymptoms((symptomList) => symptomList.map((symptom) => symptom.firebaseKey));
+      }
+
+      setSelectAllSymptoms(!selectAllSymptoms); // Toggle selectAllSymptoms state
+
+      return updatedSymptoms;
+    });
   };
 
   const logDate = new Date(logObj.dateTime);
@@ -158,7 +180,7 @@ export default function LogCard({ logObj, onUpdate }) {
   return (
     <div id="logcards">
       <Card style={{
-        width: '20rem', margin: '10px', height: '5', borderRadius: '70px', borderColor: '#F2EFFB', backgroundColor: '#E0E6F8',
+        width: '20rem', margin: '14px', height: '5', borderRadius: '70px', borderColor: '#F2EFFB', backgroundColor: '#E0E6F8',
       }}
       >
         <Card.Body>
@@ -205,6 +227,16 @@ export default function LogCard({ logObj, onUpdate }) {
               <Modal.Title>Select Symptoms</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+              {/* Select/Deselect All Symptoms checkbox */}
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectAllSymptoms}
+                  onChange={handleSelectAllSymptoms}
+                />
+                Select/Deselect All Symptoms
+              </label>
+              <p />
               {symptoms.map((symptom) => (
                 <div key={symptom.firebaseKey}>
                   <label>
