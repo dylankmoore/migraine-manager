@@ -149,20 +149,15 @@ export default function LogCard({ logObj, onUpdate }) {
 
   // Function to handle selecting or deselecting all symptoms
   const handleSelectAllSymptoms = () => {
-    setSelectedSymptoms((prevSymptoms) => {
-      const updatedSymptoms = [...prevSymptoms];
+    if (selectAllSymptoms) {
+      // Deselect all symptoms by emptying the state
+      setSelectedSymptoms([]);
+    } else {
+      // Select all symptoms by adding all symptom firebase keys to the state
+      setSelectedSymptoms(symptoms.map((symptom) => symptom.firebaseKey));
+    }
 
-      // Toggle between selecting or deselecting all symptoms
-      if (selectAllSymptoms) {
-        updatedSymptoms.splice(0); // Empty the array to deselect all symptoms
-      } else {
-        setSymptoms((symptomList) => symptomList.map((symptom) => symptom.firebaseKey));
-      }
-
-      setSelectAllSymptoms(!selectAllSymptoms); // Toggle selectAllSymptoms state
-
-      return updatedSymptoms;
-    });
+    setSelectAllSymptoms(!selectAllSymptoms); // Toggle selectAllSymptoms state
   };
 
   const logDate = new Date(logObj.dateTime);
@@ -227,7 +222,7 @@ export default function LogCard({ logObj, onUpdate }) {
               <Modal.Title>Select Symptoms</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {/* Select/Deselect All Symptoms checkbox */}
+              { /* Select/Deselect All Symptoms checkbox */}
               <label>
                 <input
                   type="checkbox"
@@ -236,7 +231,6 @@ export default function LogCard({ logObj, onUpdate }) {
                 />
                 Select/Deselect All Symptoms
               </label>
-              <p />
               {symptoms.map((symptom) => (
                 <div key={symptom.firebaseKey}>
                   <label>
