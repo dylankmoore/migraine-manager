@@ -186,7 +186,7 @@ export default function LogCard({ logObj, onUpdate }) {
           <p className="card-text"><b>dinner</b>: {logObj.dinner}</p>
           <p className="card-text"><b>exercise</b>: {logObj.exercise}</p>
           <p className="card-text"><b>notes</b>: {logObj.notes}</p>
-          <br />
+          <hr />
           <Button id="choosepain" onClick={handleShowModal}>{logObj.painId ? 'Update' : 'Choose'} Pain Level</Button>
 
           <Modal show={showPainModal} onHide={handleCloseModal}>
@@ -231,6 +231,7 @@ export default function LogCard({ logObj, onUpdate }) {
                 />
                 Select/Deselect All Symptoms
               </label>
+              <br /><br />
               {symptoms.map((symptom) => (
                 <div key={symptom.firebaseKey}>
                   <label>
