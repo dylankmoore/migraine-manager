@@ -202,3 +202,19 @@ border-color: #A9BCF5;
   background-color: #A9BCF5;
   border-color: #A9BCF5;
 }
+
+#search {
+  width: 200px;
+  align-items: center;
+  display: inline-block;
+  text-align: center;
+  font-size: 13px;
+  border-radius: 10rem;
+  height: 30px;
+  background-color: #d4d4f3;
+  border-color:#d4d4f3
+}
+
+#levelsearch {
+  font-size: 13px;
+}
