@@ -24,6 +24,8 @@ coming soon!
 ![migraine2](https://github.com/dylankmoore/migraine-manager/assets/134669892/1493e2eb-4b63-4299-8379-408797c05b31)
 ![migraine3](https://github.com/dylankmoore/migraine-manager/assets/134669892/73870b17-b046-4d50-acfb-4d3599d4cdf0)
 ![migraine4](https://github.com/dylankmoore/migraine-manager/assets/134669892/5aff2e78-93dd-4a2b-ad60-0d5100c15065)
+ERD:\
+![migraine_erd](https://github.com/dylankmoore/migraine-manager/assets/134669892/aefad5cf-11c1-4f75-9e63-c156dd7ce906)
 
 ## Relevant Links 
 - [Check out the deployed site](https://migraine-manager.netlify.app/)
