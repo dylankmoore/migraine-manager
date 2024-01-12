@@ -19,6 +19,12 @@ Migraine Manager is an app designed to better understand & manage your migraines
 ## Video Walkthrough of Migraine Manager
 coming soon!
 
+## Screenshots
+![migraine1](https://github.com/dylankmoore/migraine-manager/assets/134669892/80c5da21-2976-4e36-9c7d-34cc03852cd4)
+![migraine2](https://github.com/dylankmoore/migraine-manager/assets/134669892/1493e2eb-4b63-4299-8379-408797c05b31)
+![migraine3](https://github.com/dylankmoore/migraine-manager/assets/134669892/73870b17-b046-4d50-acfb-4d3599d4cdf0)
+![migraine4](https://github.com/dylankmoore/migraine-manager/assets/134669892/5aff2e78-93dd-4a2b-ad60-0d5100c15065)
+
 ## Relevant Links 
 - [Check out the deployed site](https://migraine-manager.netlify.app/)
 - [Wireframes](https://www.figma.com/file/JN5I4pOZUgn3Q7NFsDznz4/Migraine-Manager?type=design&node-id=0-1&mode=design&t=hLBWIoUh7JE7mg0I-0)
