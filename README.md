@@ -17,7 +17,7 @@ Migraine Manager is an app designed to better understand & manage your migraines
 - User can update & delete the logs as needed.
 
 ## Video Walkthrough of Migraine Manager
-coming soon!
+- [Loom video](https://www.loom.com/share/36c257843ea34b49927d0b0a1308c2b1?sid=ff568340-834a-496f-ab11-6f8568298092)
 
 ## Project Screenshots
 ![migraine1](https://github.com/dylankmoore/migraine-manager/assets/134669892/80c5da21-2976-4e36-9c7d-34cc03852cd4)
