@@ -4,6 +4,12 @@ Migraine Manager is an app designed to better understand & manage your migraines
 
 [View App](https://migraine-manager.netlify.app/)
 
+## Get Started
+- Clone this repo to your machine, make sure you're in the root directory, and enter the following in your command line:
+  ```npm run install```
+- To start the application, enter:
+  ```npm run dev```
+
 ## About the User 
 - The ideal user for this application is someone who suffers from migraines.
 - Their life is interrupted by migraine pain and they want to better understand their triggers.
