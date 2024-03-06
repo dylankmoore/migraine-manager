@@ -29,7 +29,6 @@ export default function Logs() {
       setLogs(logsWithData);
       setOriginalLogs(logsWithData); // Store original logs
 
-      // Fetch and process symptom details separately (not incorporated into log data)
       logsWithData.forEach(async (log) => {
         const symptomDetails = await viewSymptomDetails(log.firebaseKey);
         console.warn('Symptom Details:', symptomDetails);
@@ -41,7 +40,6 @@ export default function Logs() {
     getAllLogs();
   }, []);
 
-  // Fetch pain levels
   useEffect(() => {
     getPainLevels().then((data) => {
       setPainLevels(data || []);
