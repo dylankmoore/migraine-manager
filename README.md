@@ -7,6 +7,7 @@ Migraine Manager is an app designed to better understand & manage your migraines
 ## Get Started
 - Clone this repo to your machine, make sure you're in the root directory, and enter the following in your command line:
   ```npm run install```
+- Create a file called `.env` and copy & paste the contents from the `.envexample` file into it
 - To start the application, enter:
   ```npm run dev```
 
