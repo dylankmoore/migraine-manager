@@ -5,11 +5,14 @@ Migraine Manager is an app designed to better understand & manage your migraines
 [View App](https://migraine-manager.netlify.app/)
 
 ## Get Started
-- Clone this repo to your machine, make sure you're in the root directory, and enter the following in your command line:
-  ```npm run install```
+- Clone this repo to your machine, make sure you're in the root directory
 - Create a file called `.env` and copy & paste the contents from the `.envexample` file into it
+- Enter the following in your command line:
+  ```npm run install```
+- Next, run `npm run prepare` This command sets up husky to track eslint errors on commit that will make your deploy fail on Netlify.
 - To start the application, enter:
   ```npm run dev```
+- Open http://localhost:3000 with your browser.
 
 ## About the User 
 - The ideal user for this application is someone who suffers from migraines.
