@@ -25,6 +25,7 @@ Migraine Manager is an app designed to better understand & manage your migraines
 - User can create a log of daily habits & migraine pain level.
 - User can read the history of their logs.
 - User can update & delete the logs as needed.
+- User can search & filter the logs.
 
 ## Video Walkthrough of Migraine Manager
 - [Loom video](https://www.loom.com/share/36c257843ea34b49927d0b0a1308c2b1?sid=ff568340-834a-496f-ab11-6f8568298092)
