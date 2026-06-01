@@ -44,4 +44,4 @@ ERD:\
 - [Project Board](https://github.com/users/dylankmoore/projects/5)
 
 ## Contributors
-- [Dylan Kristine Moore](https://github.com/dylankmoore)
+- [DKM](https://github.com/dylankmoore)
